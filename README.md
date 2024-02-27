@@ -47,12 +47,12 @@ El archivo example-config.ini facilita la creación, únicamente solicitando la 
 ### Instalación de Dependencias
 Antes de ejecutar el script, es necesario instalar las librerías listadas en el archivo `requirements.txt` con el comando:
 
-pip install -r requirements.txt
+`pip install -r requirements.txt`
 
 ### Ejecución del Script Principal
 Una vez configurado el entorno, ya se puede ejecutar el script principal con el comando:
 
-python bcra-consolidate.py
+`python bcra-consolidate.py`
 
 ## Comentarios y Buenas Prácticas
 

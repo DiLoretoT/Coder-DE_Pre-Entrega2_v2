@@ -23,9 +23,9 @@ En este proyecto se consultan los siguientes endpoints:
 * "/usd_of": cotización del dólar oficial.
 
 ## Descripción del Proyecto
-El script principal de este repositorio, `bcra-consolidate.py`, interactúa con la API del BCRA para obtener información que luego es procesada y convertida a un dataframe. 
-El script principal toma funciones desarrolladas en el archivo `utils.py`, para la lectura de credenciales de la API, construcción del _conn_string_ y conexión a Redshift + carga de datos en la base de datos.
-Las funciones del archivo mencionado, a su vez toman información de un archivo de configuración (no visible) llamado `config.ini`. Más adelante se detalla la estructura. 
+`bcra-consolidate.py` Es script principal de este repositorio. Interactúa con la API del BCRA para obtener información que luego es procesada y convertida a un dataframe. Luego conecta a Redshift e intenta hacer la inserción de datos, controlando duplicados a través de una tabla transitoria/staging "stg_bcra". 
+`utils.py` Es el archivo de funciones que script principal utiliza para la lectura de credenciales de la API, construcción del _conn_string_ y conexión a Redshift + carga de datos en la base de datos.
+`config.ini` Es el archivo de credenciales que consulta utils.py para autenticación y datos de conexión. A continuación se detalla la estructura. 
 
 ### Estructura del archivo `config.ini`
 El archivo `config.ini` debe tener la siguiente estructura:
@@ -43,13 +43,11 @@ port = TU_PORT_AQUI
 El archivo example-config.ini facilita la creación, únicamente solicitando la inserción de credenciales y datos propios.
 
 ### Instalación de Dependencias
-
 Antes de ejecutar el script, es necesario instalar las librerías listadas en el archivo `requirements.txt` con el comando:
 
 pip install -r requirements.txt
 
 ### Ejecución del Script Principal
-
 Una vez configurado el entorno, ya se puede ejecutar el script principal con el comando:
 
 python bcra-consolidate.py

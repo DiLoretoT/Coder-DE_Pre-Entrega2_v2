@@ -1,17 +1,33 @@
 # Coderhouse - Pre-entrega 2
+Este proyecto es parte de una serie de entregas para el curso de Coder House. La presente versión corresponde a la pre-entrega 2, donde se construye a partir de la pre-entrega 1, sobre la consulta de la API elegida, para en esta instancia lograr la carga de datos a Redshift.
 
-Este proyecto es parte de una serie de entregas para el curso de Coder House. La presente versión corresponde a la pre-entrega número 2, donde se ha avanzado en la consulta de la API del BCRA (Banco Central de la República Argentina), recopilando distintos datos de interés.
+## COMENTARIO IMPORTANTE
+Lamentablemente, no logré insertar los datos en la base de redshift. El error recibido es "'Connection' object has no attribute 'cursor'".
+Estuve varios días intentando resolverlo pero agoté mis alternativas. Volví a ver todoas las clases y ejecuté todo tal cual se podía ver. Conexión a redshift de distintas formas, distintas funciones para la lectura de credenciales, to_sql dentro y fuera de la función, etc. 
+Por lo que pude conversar, varios compañer@s tuvieron el mismo inconveniente. Me comentaron que algunos lo resolvieron ejecutando el mismo código en Google Colabs, pero estuve intentando hacerlo y al no haber usando nunca esta plataforma, no tuve tiempo suficiente para hacer lo mismo. 
+
+En principio pude ver que el error que arroja informa que no se está usando sqlalchemy, y la sección del código de python desde donde se envía el error, parece ser la función interna de python desde donde se intenta hacer una conexión con sqlite. Pero no logré identificar por qué. 
+
+Si se requiere más info para entender el error, quedo atento para enviarla. 
+
+### API BCRA
+La API elegida es la del Banco central de la República Argentina. 
+Link de la documentación de la API: https://estadisticasbcra.com/api/documentacion 
+
+En este proyecto se consultan los siguientes endpoints: 
+* "/plazo_fijo": monto en plazos fijos expresado en miles.
+* "/depositos": monto en depósitos expresado en miles.
+* "/cajas_ahorro": monto en cajas de ahorro expresado en miles.
+* "/cuentas_corrientes": monto en cuentas corrientes expresado en miles.
+* "/usd": cotización del dólar blue.
+* "/usd_of": cotización del dólar oficial.
 
 ## Descripción del Proyecto
-
-El script principal de este repositorio, `bcra-consolidate.py`, está diseñado para interactuar con la API del BCRA y obtener información valiosa que luego es procesada y almacenada. Este proceso forma parte de un ejercicio educativo para aplicar conocimientos de programación en Python, consulta de APIs, manejo de bases de datos, y versionamiento de código con Git y GitHub.
-
-## Configuración
-
-Para que el script funcione correctamente, es necesario realizar una configuración inicial que incluye la creación de un archivo `config.ini`. Este archivo debe contener las credenciales y datos de acceso para la API del BCRA y para la conexión con una base de datos Redshift.
+El script principal de este repositorio, `bcra-consolidate.py`, interactúa con la API del BCRA para obtener información que luego es procesada y convertida a un dataframe. 
+El script principal toma funciones desarrolladas en el archivo `utils.py`, para la lectura de credenciales de la API, construcción del _conn_string_ y conexión a Redshift + carga de datos en la base de datos.
+Las funciones del archivo mencionado, a su vez toman información de un archivo de configuración (no visible) llamado `config.ini`. Más adelante se detalla la estructura. 
 
 ### Estructura del archivo `config.ini`
-
 El archivo `config.ini` debe tener la siguiente estructura:
 
 [api_bcra]
@@ -24,26 +40,20 @@ user = TU_USER_AQUI
 password = TU_PASSWORD_AQUI
 port = TU_PORT_AQUI
 
-Un ejemplo de este archivo ha sido enviado junto con el link de GitHub en un archivo `.txt` adjunto para referencia.
+El archivo example-config.ini facilita la creación, únicamente solicitando la inserción de credenciales y datos propios.
 
 ### Instalación de Dependencias
 
-Antes de ejecutar el script, asegúrate de instalar las librerías necesarias listadas en el archivo `requirements.txt` utilizando el siguiente comando:
+Antes de ejecutar el script, es necesario instalar las librerías listadas en el archivo `requirements.txt` con el comando:
 
 pip install -r requirements.txt
 
 ### Ejecución del Script Principal
 
-Una vez configurado el entorno, puedes ejecutar el script principal con el comando:
+Una vez configurado el entorno, ya se puede ejecutar el script principal con el comando:
 
 python bcra-consolidate.py
 
 ## Comentarios y Buenas Prácticas
 
-Actualmente, mi rol profesional está enfocado en infraestructura, por lo que mi interacción diaria con herramientas como Python, SQL, y GitHub no es constante. Sin embargo, he realizado un esfuerzo por documentar adecuadamente el código y proveer instrucciones claras para su ejecución en este archivo README.
-
-Cualquier feedback relacionado con las buenas prácticas en compartir y documentar proyectos de software será enormemente apreciado. ¡Espero que el código sea comprensible y que este README facilite su uso y comprensión!
-
-## Contacto
-
-Si tienes preguntas o comentarios sobre este proyecto, no dudes en abrir un issue en el repositorio o contactarme directamente (opcional: agregar información de contacto).
+Actualmente trabajo en un equipo de infraestructura, con lo cual no tengo relación diaria con estas herramientas. Cualquier feedback relacionado con las buenas prácticas en compartir y documentar proyectos de este tipo será muy bienvenida.

@@ -1,6 +1,7 @@
 logging
-sqlalchemy==1.4.36
-psycopg2-binary
 pathlib
-pandas
-requests
+requests==2.25.1
+pandas==1.2.3 
+psycopg2==2.9.7
+SQLAlchemy==1.4.38
+redshift_connector==2.1.0

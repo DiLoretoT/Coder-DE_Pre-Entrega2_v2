@@ -77,6 +77,8 @@ else:
 # CONNECTION TO REDSHIFT
 print("Creando conexión a Redshift...")
 engine = connect_to_db("config2.ini", "redshift")
+print(type(engine))
+print(type(engine.connect()))
 
 with engine.connect() as conn, conn.begin():
 
@@ -98,3 +100,5 @@ with engine.connect() as conn, conn.begin():
     
     #Debug print: si el código SQL se ejecuta sin excepciones, muestra el mensaj de éxito. 
     print("La inserción de datos a PRD validando duplicados, fue lograda con éxito.")
+
+print("Conexión cerrada. Proceso finalizado")
